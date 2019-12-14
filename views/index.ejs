@@ -1,0 +1,365 @@
+<html>
+
+<style>
+  #invoice-POS {
+    box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+    padding: 2mm;
+    margin: 0 auto;
+    width: 80mm;
+    height: 210mm;
+    background: #fff;
+  }
+
+  #invoice-POS ::selection {
+    background: #f31544;
+    color: #fff;
+  }
+
+  #invoice-POS ::moz-selection {
+    background: #f31544;
+    color: #fff;
+  }
+
+  #invoice-POS h1 {
+    font-size: 1.5em;
+    color: #222;
+  }
+
+  #invoice-POS h2 {
+    font-size: 0.9em;
+  }
+
+  #invoice-POS h3 {
+    font-size: 1.2em;
+    font-weight: 300;
+    line-height: 2em;
+  }
+
+  #invoice-POS p {
+    font-size: 0.7em;
+    color: #666;
+    line-height: 1.2em;
+  }
+
+  #invoice-POS #top,
+  #invoice-POS #mid,
+  #invoice-POS #bot {
+    /* Targets all id with 'col-' */
+    border-bottom: 1px solid #eee;
+  }
+
+  #invoice-POS #top {
+    min-height: 100px;
+  }
+
+  #invoice-POS #mid {
+    min-height: 80px;
+  }
+
+  #invoice-POS #bot {
+    min-height: 50px;
+  }
+
+  #invoice-POS #top .logo {
+    height: 60px;
+    width: 60px;
+    background: url(http://michaeltruong.ca/images/logo1.png) no-repeat;
+    background-size: 60px 60px;
+  }
+
+  #invoice-POS .clientlogo {
+    float: left;
+    height: 60px;
+    width: 60px;
+    background: url(http://michaeltruong.ca/images/client.jpg) no-repeat;
+    background-size: 60px 60px;
+    border-radius: 50px;
+  }
+
+  #invoice-POS .info {
+    display: block;
+    margin-left: 0;
+  }
+
+  #invoice-POS .title {
+    float: right;
+  }
+
+  #invoice-POS .title p {
+    text-align: right;
+  }
+
+  #invoice-POS table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #invoice-POS .tabletitle {
+    font-size: 0.5em;
+    background: #eee;
+  }
+
+  #invoice-POS .service {
+    border-bottom: 1px solid #eee;
+  }
+
+  #invoice-POS .item {
+    width: 24mm;
+  }
+
+  #invoice-POS .itemtext {
+    font-size: 0.5em;
+  }
+
+  #invoice-POS #legalcopy {
+    margin-top: 5mm;
+  }
+</style>
+
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  </script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"> </script>
+  <header>
+    <div class="collapse bg-dark" id="navbarHeader">
+      <div class="container">
+        <div class="row">
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+      <div class="container d-flex justify-content-between">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+          <strong>Kahve Dükkanı</strong>
+        </a>
+        <a type="button" class="btn btn-secondary" href="/dashboard"><span>Üye işyeri</span></a>
+      </div>
+    </div>
+  </header>
+
+  <div style="display: flex; margin-top: 100px; justify-content: center;">
+
+    <div class="card" style="width: 30rem; height: 35rem; margin: 10px; text-align: center;">
+      <img src="https://image.shutterstock.com/image-photo/latte-arts-coffe-white-cup-260nw-1061522432.jpg"
+        class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title" id="product_name" style="font-size: 3em">Americano</h5>
+        <span class="card-text" id="price" style="font-size: 2em;">1000</span></br>
+        <a href="#" data-toggle="modal" onclick="payment()" data-target="#modal1" id="send"
+          class="btn btn-primary">Satın al</a>
+      </div>
+    </div>
+
+    <div class="card" style="width: 30rem; height: 35rem; margin: 10px; text-align: center;">
+      <img src="https://image.shutterstock.com/image-photo/latte-arts-coffe-white-cup-260nw-1061522432.jpg"
+        class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title" id="product_name1" style="font-size: 3em">Filtre Kahve</h5>
+        <span class="card-text" id="price1" style="font-size: 2em;">500</span></br>
+        <a href="#" data-toggle="modal" onclick="payment1()" data-target="#modal1" id="send"
+          class="btn btn-primary">Satın al</a>
+      </div>
+    </div>
+
+    <div class="modal" id="modal1" tabindex="-1" role="dialog">
+
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Your Lightning invoice:</p>
+            <canvas id="qr"></canvas>
+            <div id="qr3"></div>
+            <img id="bannerImg" src="" alt="">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div id="invoice-POS">
+
+    <center id="top">
+      <img src="http://michaeltruong.ca/images/logo1.png" style="	 height: 60px; width: 60px;" alt="">
+      <div class="info">
+        <h2>funChain Inc</h2>
+      </div>
+    </center>
+
+    <center>
+      <canvas style="margin: 10px 0px;" id="qr2"></canvas>
+    </center>
+    </br>
+
+
+    <div id="bot">
+
+      <div id="table">
+        <table>
+          <tr class="tabletitle">
+            <td class="item">
+              <h2>Ürün</h2>
+            </td>
+            <td class="Hours">
+              <h2>Adet</h2>
+            </td>
+            <td class="Rate">
+              <h2>Tutar</h2>
+            </td>
+          </tr>
+
+          <tr class="service">
+            <td class="tableitem">
+              <p class="itemtext">Filtre Kahve</p>
+            </td>
+            <td class="tableitem">
+              <p class="itemtext">1</p>
+            </td>
+            <td class="tableitem">
+              <p class="itemtext">฿ 0.05</p>
+            </td>
+          </tr>
+
+          <tr class="tabletitle">
+            <td></td>
+            <td class="Rate">
+              <h2>Toplam</h2>
+            </td>
+            <td class="payment">
+              <h2>฿ 0.05</h2>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+      <!--End Table-->
+
+      <div id="legalcopy">
+        <p class="legal"><strong>Thank you for your payment!</strong> </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    function payment() {
+      $.ajax({
+        type: "POST",
+        url: "/",
+        data: {
+          name: $("#product_name").text(),
+          price: $("#price").text()
+        },
+        success: function (result) {
+          console.log(result);
+          new QRious({
+            element: document.getElementById('qr'),
+            value: result.payment_request,
+            size: 400
+          });
+          checkPayment(result.id);
+        }
+      });
+
+    }
+
+    function payment1() {
+      $.ajax({
+        type: "POST",
+        url: "/",
+        data: {
+          name: $("#product_name1").text(),
+          price: $("#price1").text()
+        },
+        success: function (result) {
+          console.log(result);
+          new QRious({
+            element: document.getElementById('qr'),
+            value: result.payment_request,
+            size: 400
+          });
+          checkPayment(result.id);
+        }
+      });
+    }
+    let paid = false;
+
+    function checkPayment(id) {
+      if (!paid) {
+        $.ajax({
+          url: "/order/" + id,
+          type: "GET",
+          success: function (result) {
+            console.log(result);
+            if (result.paid == true) {
+              paid = true;
+              $("#qr").replaceWith(
+                "<img style='width: 300px; heigth:300px;' width=300 heigth=300 src='https://www.kablooe.com/wp-content/uploads/2019/08/check_mark.png'>"
+              );
+              new QRious({
+                element: document.getElementById('qr2'),
+                value: result.id,
+                size: 130
+              });
+              html2canvas(document.querySelector("#invoice-POS")).then(canvas => {
+                console.log(canvas);
+                bannerImage = document.getElementById('bannerImg');
+                var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+
+                $("#qr3").replaceWith(`${canvas}`);
+                document.body.appendChild(canvas);
+
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(bannerImage, 0, 0);
+
+                var dataURL = canvas.toDataURL("image/png");
+                $.ajax({
+                  url: "/save",
+                  type: "POST",
+                  data: {
+                    base64: dataURL.replace(/^data:image\/(png|jpg);base64,/, "")
+                  },
+                  success: function (result) {
+                    console.log(result);
+                  }
+                });
+              });
+            }
+          }
+        })
+      }
+      window.setTimeout(function () {
+        if (paid == false) {
+          checkPayment(id);
+        }
+      }, 3000);
+
+    }
+  </script>
+
+</body>
+
+</html>
